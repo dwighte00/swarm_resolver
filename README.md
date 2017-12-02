@@ -58,6 +58,7 @@ From the pycares docs:
 
 Example output:
 
+```
 {'amazon.com': [ares_query_ns_result(host='pdns1.ultradns.net', ttl=None),
                 ares_query_ns_result(host='ns4.p31.dynect.net', ttl=None),
                 ares_query_ns_result(host='ns3.p31.dynect.net', ttl=None),
@@ -94,3 +95,4 @@ Example output:
                  ares_query_ns_result(host='ns3.google.com', ttl=None)]}
 
 
+```
