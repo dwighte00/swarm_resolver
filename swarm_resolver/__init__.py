@@ -2,6 +2,9 @@ import asyncio
 import uvloop
 import aiodns
 
+__version__ = '0.1.0'
+
+
 class SwarmResolver:
     """ A simple class which will resolve a list of domains asyncrionously """
 
