@@ -1,5 +1,0 @@
-build
-dist
-*.egg*
-__pycache__
-*.pyc
