@@ -1,4 +1,6 @@
-#SwarmResolver
+========================================================
+Simple bulk domain resolver based on aiodns and asyncio
+========================================================
 
 This is a simple wrapper for aiodns. Initially I wanted to be able to asynchronously resolve a list of domains and this is what I did.
 Makes use of https://github.com/saghul/aiodns and takes a list of domains to resolve. A queue of workers will try and resolve the list passed to them.
@@ -96,3 +98,32 @@ Example output:
 
 
 ```
+
+
+Running the test code
+======================
+
+To run the test code: ``python3 tests.py``
+
+
+Author
+======
+
+adam <adam@threathive.com>
+
+
+License
+=======
+
+aiodns uses the MIT license, check LICENSE file.
+
+
+Python versions
+===============
+Python >= 3.6 should have no problems.
+
+Contributing
+============
+
+If you'd like to contribute, fork the project, make a patch and send a pull request.
+
