@@ -1,10 +1,12 @@
 from swarm_resolver import SwarmResolver
+import asyncio
 import pprint
 import unittest
 
 
 class SwarmTest(unittest.TestCase):
     def setUp(self):
+        self.loop = asyncio.new_event_loop()
         self. domains = [
             "facebook.com",
             "youtube.com",
@@ -15,8 +17,8 @@ class SwarmTest(unittest.TestCase):
             "github.com",
             "thisdomainisnotreal.xyy"
         ]
-        self.swarm = SwarmResolver(qtype="NS", num_workers=10)
-        self.swarm2 = SwarmResolver(qtype="A", num_workers=10)
+        self.swarm = SwarmResolver(qtype="NS", num_workers=10, loop=self.loop)
+        self.swarm2 = SwarmResolver(qtype="A", num_workers=10, loop=self.loop)
 
 
     def tearDown(self):

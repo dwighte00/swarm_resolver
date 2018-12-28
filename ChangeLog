@@ -1,3 +1,7 @@
+0.1.1
+=====
+- Updated init to allow for passing an event loop wrather than creating one every time we resolve the domain list.
+
 0.1.0
 =====
 - Initial release

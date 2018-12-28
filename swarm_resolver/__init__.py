@@ -1,14 +1,16 @@
 import asyncio
-import uvloop
 import aiodns
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 class SwarmResolver:
     """ A simple class which will resolve a list of domains asyncrionously """
 
-    def __init__(self, num_workers=5, nameservers = [ '8.8.8.8' , '8.8.4.4' ] , qtype = "A"):
+    def __init__(self, num_workers=5, nameservers = [ '8.8.8.8' , '8.8.4.4' ] , loop = None, qtype = "A"):
+        self.loop = loop or asyncio.get_event_loop()
+        assert self.loop is not None
+
         self.num_workers = num_workers
         self.nameservers = nameservers
         self.qtype = qtype
@@ -18,26 +20,22 @@ class SwarmResolver:
     #Will startup an event loop and split up the list amongst num_workers worth of workers. 
     #Returns the list of domains within domain_list as well as the results of their dns lookup.
     def resolve_list(self , domain_list):
-        asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
-        loop = asyncio.get_event_loop()
         tasks = []
-
         q = asyncio.Queue()
 
         for domain in domain_list:
             q.put_nowait(domain)
-            
-        for i in range(self.num_workers):
-            tasks.append(self.do_work(q, loop))
 
-        loop.run_until_complete(asyncio.wait(tasks))
-        loop.close()
+        for i in range(self.num_workers):
+            tasks.append(self.do_work(q))
+
+        self.loop.run_until_complete(asyncio.wait(tasks))
         return(self.results)
 
     #Will asynchronously perform a DNS lookup for the qtype and for the domains within the current shared Queue.
     #Will populate the shared results dictionary with results for each performed dns lookup.
-    async def do_work(self, work_queue, loop):
-            resolver = aiodns.DNSResolver(loop=loop, nameservers=self.nameservers , timeout=2 , tries=1)
+    async def do_work(self, work_queue):
+            resolver = aiodns.DNSResolver(loop=self.loop, nameservers=self.nameservers , timeout=2 , tries=1)
 
             while not work_queue.empty():
                 domain = await work_queue.get()
