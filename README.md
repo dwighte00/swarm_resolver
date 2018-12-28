@@ -1,15 +1,18 @@
-========================================================
-Simple bulk domain resolver based on aiodns and asyncio
-========================================================
+swarm_resolver
+=========
 
+Simple bulk domain resolver based on aiodns and asyncio
+
+```
 This is a simple wrapper for aiodns. Initially I wanted to be able to asynchronously resolve a list of domains and this is what I did.
 Makes use of https://github.com/saghul/aiodns and takes a list of domains to resolve. A queue of workers will try and resolve the list passed to them.
 This library returns a dictionary of domain, [ pycares result types ] see https://github.com/saghul/pycares . In the case of an error the response type will 
 be returned instead.
+```
 
 From the pycares docs:
 
- The result type varies depending on the query type:
+The result type varies depending on the query type:
 
         A and AAAA: ares_query_simple_result, fields:
             host
